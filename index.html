@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  [favicon("https://user-uploads.perchance.org/file/84f63c866a8b85cfaafed09f19334673.png")]
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="style.css" />
+
+  <div
+    id="loadingScreenEl"
+    style="
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: #2c3e50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Courier Prime', monospace;
+      color: white;
+      z-index: 9999;
+    "
+  >
+    <div style="width: 60%; text-align: left; position: relative">
+      <div
+        id="loadingTextEl"
+        style="
+          font-size: 0.8em;
+          position: absolute;
+          top: -20px;
+          left: 0;
+          margin-bottom: 10px;
+        "
+      >
+        Loading
+      </div>
+      <div
+        style="
+          height: 22px;
+          width: 100%;
+          border: 2.5px solid white;
+          background-color: transparent;
+          box-sizing: border-box;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 3px;
+        "
+      >
+        <div
+          style="
+            height: 100%;
+            width: 100%;
+            background-color: transparent;
+            display: flex;
+            align-items: center;
+            padding: 1px;
+            box-sizing: border-box;
+          "
+        >
+          <div
+            id="progressBarEl"
+            style="
+              height: 100%;
+              width: 0;
+              background-color: white;
+              transition: width 0.3s;
+            "
+          ></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="header">
+      <img
+        src="https://litter.catbox.moe/emlruw.png"
+        alt="Imagine AI: Free and Limitless FLUX Image Generator"
+        class="light-mode-image"
+      />
+      <img
+        src="https://litter.catbox.moe/emlruw.png"
+        alt="Imagine AI: Free and Limitless FLUX Image Generator"
+        class="dark-mode-image"
+        style="display: none"
+      />
+    </div>
+    <div class="tagline">
+      <span
+        >Sometimes the wildest imagination comes from the simplest words.</span
+      >
+    </div>
+    <div class="box">
+      <div class="title">
+        <i class="fas fa-exclamation-circle"></i> Tips
+        <button class="toggle" onclick="toggleBox(this)">show</button>
+      </div>
+      <div class="content" hidden>
+        <section>
+          <h2><i class="fas fa-file-alt"></i> Scratchpad</h2>
+          <p>
+            You can save your notes in this box, and it won't affect your
+            prompt. Don't forget to click
+            <strong><i class="fas fa-save"></i></strong> to save your notes.
+          </p>
+          <p>
+            <em>Note:</em> If you delete your browser cookies, all saved notes
+            will be lost.
+          </p>
+          <hr />
+        </section>
+        <section>
+          <h2><i class="fas fa-align-left"></i> Description Box</h2>
+          <p>
+            Fill this box with your desired description. Write detailed prompts
+            to generate better images. The output quality depends on how well
+            you write it.
+          </p>
+          <ul>
+            <li>
+              <i class="fas fa-magic"></i> : This tool will help you create text
+              prompts to generate better images using AI assistance. Simply
+              enter a few keywords, and it will automatically be processed and
+              written by AI in the description column.
+            </li>
+          </ul>
+          <hr />
+        </section>
+        <section>
+          <h2><i class="fas fa-cog"></i> Options:</h2>
+          <ol>
+            <li>
+              <strong><i class="fas fa-palette"></i> Model:</strong> This
+              section contains various Flux models, ranging from realistic and
+              3D to anime. The default model is Flux, suitable for general use.
+            </li>
+            <li>
+              <strong
+                ><i class="fas fa-ruler-combined"></i> Width and Height:</strong
+              >
+              Fill with pixel ratios. For better results, use ratios like 1:1,
+              2:3, 3:4, 16:9, etc. <br /><em>Note:</em> Higher pixel sizes take
+              longer for the AI to generate images.
+            </li>
+            <li>
+              <strong><i class="fas fa-seedling"></i> Seed:</strong> The default
+              seed is random to produce different images.
+              <em>"Same prompt + same seed = same image."</em> Use this to
+              modify displayed images. Leave the box empty if unsure.
+            </li>
+            <li>
+              <strong><i class="fas fa-image"></i> How Many Images:</strong>
+              Specify the number of images to generate. The more you generate,
+              the longer it takes. The default number is 1.
+            </li>
+            <li>
+              <strong><i class="fas fa-check-square"></i> Checkboxes:</strong>
+              <ul>
+                <li>
+                  <strong
+                    ><i class="fas fa-microchip"></i> Enhance Prompt:</strong
+                  >
+                  Check this box to let the AI improve your prompt during image
+                  generation.
+                </li>
+                <li>
+                  <strong><i class="fas fa-remove-format"></i> No Logo:</strong>
+                  Check this box to remove the
+                  <em><strong>Pollinations.ai</strong></em> watermark from the
+                  output image.
+                </li>
+                <li>
+                  <strong><i class="fas fa-eye-slash"></i> Privacy:</strong>
+                  Enable this to hide your prompt from the gallery. <br /><em
+                    >Note:</em
+                  >
+                  Every generated image is automatically sent to the gallery, as
+                  the website uses SSE Stream from Pollinations.ai's API.
+                </li>
+              </ul>
+            </li>
+          </ol>
+          <hr />
+        </section>
+      </div>
+    </div>
+    <div class="box">
+      <div class="title">
+        <i class="fas fa-file-alt"></i> Scratchpad
+        <button class="toggle" onclick="toggleBox(this)">show</button>
+      </div>
+      <div class="content" hidden>
+        <textarea
+          id="scratchpad"
+          placeholder="You can save your note here..."
+        ></textarea>
+        <div class="button-container">
+          <button class="save-button" onclick="saveScratchpad()">
+            <i class="fas fa-save"></i>
+          </button>
+          <button class="clear-box" onclick="clearScratchpad()">
+            <i class="fas fa-trash-alt"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="title">
+        <i class="fas fa-align-left"></i> Description
+        <button class="toggle" onclick="toggleBox(this)">hide</button>
+      </div>
+      <div class="content">
+        <textarea
+          id="descriptionEl"
+          placeholder="Imagine your words..."
+          oninput="saveToLocalStorage('descriptionEl')"
+        ></textarea>
+        <div class="button-container">
+          <button id="aiHelpBtn"><i class="fas fa-magic"></i></button>
+          <button class="clear-box" onclick="clearBox(this)">
+            <i class="fas fa-trash-alt"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="aiHelpSectionEl" hidden>
+      <p>
+        Write the keywords below, and let the AI help you create the image
+        prompt.
+      </p>
+      <input type="text" id="keywordInputEl" placeholder="Enter keywords..." />
+      <button id="writeBtn"><i class="fas fa-caret-right"></i></button>
+    </div>
+    <div class="options">
+      <div class="title"><i class="fas fa-cog"></i> Options</div>
+      <div class="fields">
+        <div class="field">
+          <label for="model">Model</label>
+          <select id="modelEl" onchange="saveToLocalStorage('modelEl')">
+            <option value="flux" selected>Flux</option>
+            <option value="flux-pro">Flux-Pro</option>
+            <option value="flux-realism">Flux-Realism</option>
+            <option value="Flux-Anime">Flux-Anime</option>
+            <option value="flux-3d">Flux-3D</option>
+            <option value="flux-cablyal">Flux-CablyAl</option>
+            <option value="any-dark">Any-Dark</option>
+            <option value="turbo">Turbo</option>
+            <option value="Unity">Unity</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="width">Width</label>
+          <input
+            type="text"
+            id="widthEl"
+            value="1024"
+            oninput="updateRatio(),saveToLocalStorage('widthEl')"
+          />
+          <span id="widthRatio" value=":1"></span>
+        </div>
+        <div class="field">
+          <label for="height">Height</label>
+          <input
+            type="text"
+            id="heightEl"
+            value="1024"
+            oninput="updateRatio(),saveToLocalStorage('heightEl')"
+          />
+          <span id="heightRatio" value=":1"></span>
+        </div>
+      </div>
+      <div class="fields">
+        <div class="field">
+          <label for="seed">Seed</label>
+          <input
+            type="text"
+            id="seedEl"
+            value=""
+            placeholder="..."
+            readonly
+            oninput="saveToLocalStorage('seedEl')"
+          />
+          <button class="lock-button" onclick="toggleLock(this)">
+            <i class="fas fa-lock"></i>
+          </button>
+        </div>
+        <div class="field">
+          <label for="image-options">How many?</label>
+          <input
+            type="text"
+            id="imageOptionsEl"
+            placeholder="..."
+            oninput="saveToLocalStorage('imageOptionsEl')"
+          />
+        </div>
+      </div>
+      <div class="checkboxes">
+        <div class="checkbox">
+          <input
+            type="checkbox"
+            id="enhanceEl"
+            onchange="saveToLocalStorage('enhanceEl')"
+          />
+          <label for="enhance">Enhance</label>
+        </div>
+        <div class="checkbox">
+          <input
+            type="checkbox"
+            id="logoEl"
+            checked
+            onchange="saveToLocalStorage('logoEl')"
+          />
+          <label for="logo">No Logo</label>
+        </div>
+        <div class="checkbox">
+          <input
+            type="checkbox"
+            id="privacyEl"
+            onchange="saveToLocalStorage('privacyEl')"
+          />
+          <label for="privacy">Privacy</label>
+        </div>
+      </div>
+    </div>
+    <div class="buttons">
+      <button id="imagineButtonEl" onclick="startImagine()">IMAGINE</button>
+      <button id="cancelButtonEl" onclick="cancelImagine()" hidden>
+        CANCEL
+      </button>
+      <!-- Button to cancel IMAGINING -->
+    </div>
+    <div class="generated-image" id="generatedImageEl"></div>
+    <div class="buttons">
+      <button id="showFeedButtonEl" onclick="toggleFeed()">SHOW FEED</button>
+    </div>
+    <div class="feed-content" id="feedContentEl" style="display: none">
+      <div class="tabs">
+        <button id="feedTab" onclick="switchTab(event, 'feed')">Forum</button>
+        <button id="galleryTab" onclick="switchTab(event, 'gallery')">
+          Gallery
+        </button>
+      </div>
+      <div id="feed" class="tab-content" style="display: block">
+        [forum(commentOptions)]
+      </div>
+      <div id="gallery" class="tab-content gallery">
+        <div id="galleryContent">
+          <div id="gridContainerEl">
+            <!-- Dynamic gallery content -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>
+      Check API Documentations
+      <a
+        class="link-vaporwave"
+        href="https://github.com/pollinations/pollinations/blob/master/APIDOCS.md"
+        target="_blank"
+        ><strong>Repository</strong>
+        <img
+          src="https://user-uploads.perchance.org/file/0f8fa880493420e84496d92c4b2d2caf.png"
+          alt="GitHub Icon"
+          width="12"
+      /></a>
+    </p>
+    <p>
+      Credit by
+      <a class="link-vaporwave" href="https://perchance.org/example"
+        ><strong>Zach0_</strong></a
+      >
+    </p>
+    <br /><br />
+  </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      if (!localStorage.getItem("modelEl")) {
+        modelEl.value = "flux";
+        saveToLocalStorage("modelEl");
+      } else {
+        modelEl.value = localStorage.getItem("modelEl");
+      }
+
+      const lastSelectedChatModel = localStorage.getItem("model_list_uniqueEl");
+      if (lastSelectedChatModel) {
+        model_list_uniqueEl.value = lastSelectedChatModel;
+      }
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      // Load or set default for widthEl
+      const widthEl = document.getElementById("widthEl");
+      const heightEl = document.getElementById("heightEl");
+
+      if (!localStorage.getItem("widthEl")) {
+        widthEl.value = 1024;
+      } else {
+        widthEl.value = localStorage.getItem("widthEl");
+      }
+
+      // Load or set default for heightEl
+      if (!localStorage.getItem("heightEl")) {
+        heightEl.value = 1024;
+      } else {
+        heightEl.value = localStorage.getItem("heightEl");
+      }
+
+      // Load or set default for widthRatio
+      if (localStorage.getItem("widthRatio")) {
+        document.getElementById("widthRatio").innerText =
+          localStorage.getItem("widthRatio");
+      } else {
+        document.getElementById("widthRatio").innerText = "1";
+      }
+
+      // Load or set default for heightRatio
+      if (localStorage.getItem("heightRatio")) {
+        document.getElementById("heightRatio").innerText =
+          localStorage.getItem("heightRatio");
+      } else {
+        document.getElementById("heightRatio").innerText = "1";
+      }
+
+      // Call to update ratio based on initial values
+      updateRatio();
+    });
+
+    function updateRatio() {
+      const widthEl = document.getElementById("widthEl");
+      const heightEl = document.getElementById("heightEl");
+      const widthRatioEl = document.getElementById("widthRatio");
+      const heightRatioEl = document.getElementById("heightRatio");
+
+      const width = parseInt(widthEl.value) || 1;
+      const height = parseInt(heightEl.value) || 1;
+
+      // Function to calculate greatest common divisor (GCD)
+      const gcd = (a, b) => (b === 0 ? a : gcd(b, a % b));
+      const commonDivisor = gcd(width, height);
+
+      // Calculate ratios based on GCD for integer ratio
+      const widthRatio = width / commonDivisor;
+      const heightRatio = height / commonDivisor;
+
+      // Update ratio elements on the page
+      widthRatioEl.textContent = `:${widthRatio}`;
+      heightRatioEl.textContent = `:${heightRatio}`;
+
+      // Save ratios to localStorage
+      localStorage.setItem("widthRatio", `:${widthRatio}`);
+      localStorage.setItem("heightRatio", `:${heightRatio}`);
+
+      // Save width and height inputs to localStorage
+      localStorage.setItem("width", width);
+      localStorage.setItem("height", height);
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      if (localStorage.colorScheme === "dark") {
+        document.body.classList.add("dark-mode");
+        colorSchemeIconEl.classList.add("fa-sun");
+        toggleImages();
+      }
+      loadInputsFromLocalStorage();
+      loadScratchpad();
+      loadChatHistory();
+    });
+
+    function saveLastSelectedModel() {
+      localStorage.model_list_uniqueEl = model_list_uniqueEl.value;
+    }
+
+    function saveToLocalStorage(id) {
+      let el = document.getElementById(id);
+      if (el.type === "checkbox") {
+        localStorage[id] = el.checked;
+      } else {
+        localStorage[id] = el.value;
+      }
+
+      const widthEl = document.getElementById("widthEl");
+      const heightEl = document.getElementById("heightEl");
+
+      // Save width and height to localStorage
+      localStorage.setItem("widthEl", widthEl.value);
+      localStorage.setItem("heightEl", heightEl.value);
+    }
+
+    function loadInputsFromLocalStorage() {
+      const inputIds = [
+        "descriptionEl",
+        "modelEl",
+        "widthEl",
+        "heightEl",
+        "seedEl",
+        "imageOptionsEl",
+        "enhanceEl",
+        "logoEl",
+        "privacyEl",
+      ];
+      inputIds.forEach((id) => {
+        let el = document.getElementById(id);
+        if (el) {
+          if (el.type === "checkbox") {
+            el.checked = localStorage[id] === "true";
+          } else {
+            el.value = localStorage[id] || "";
+          }
+        }
+      });
+    }
+
+    function toggleBox(button) {
+      let content = button.parentElement.nextElementSibling;
+      content.hidden = !content.hidden;
+      button.textContent = content.hidden ? "show" : "hide";
+    }
+
+    function toggleMenu() {
+      let menuOptions = menuOptionsEl;
+      menuOptions.style.display =
+        menuOptions.style.display === "block" ? "none" : "block";
+
+      let menuIcon = toggleMenuIconEl;
+      menuIcon.classList.toggle("animated-x");
+    }
+
+    function toggleIconFlip(icon) {
+      icon.classList.toggle("flip");
+    }
+
+    async function startImagine() {
+      let imagineButton = imagineButtonEl;
+      let cancelButton = cancelButtonEl;
+
+      imagineButton.innerHTML =
+        '<span>IMAGINING<span class="loading-wave"></span></span>';
+      imagineButton.disabled = true;
+      cancelButton.hidden = false;
+
+      let prompt = descriptionEl.value;
+      let model = modelEl.value;
+      let seedInput = seedEl.value.trim();
+      let width = parseInt(widthEl.value);
+      let height = parseInt(heightEl.value);
+      let nologo = logoEl.checked ? "true" : "false";
+      let privacy = privacyEl.checked ? "true" : "false";
+      let enhance = enhanceEl.checked ? "true" : "false";
+      let imageOptions = parseInt(imageOptionsEl.value || "1", 10);
+      let seed = seedInput === "" ? -1 : seedInput;
+      let urlBase = `https://image.pollinations.ai/prompt/${encodeURIComponent(
+        prompt
+      )}?model=${model}&width=${width}&height=${height}&nologo=${nologo}&private=${privacy}&enhance=${enhance}`;
+
+      try {
+        let generatedImageDiv = generatedImageEl;
+        generatedImageDiv.innerHTML = "";
+        for (let i = 0; i < imageOptions; i++) {
+          let dummyCanvas = document.createElement("div");
+          dummyCanvas.className = "dummy-canvas";
+
+          let maxDimension = 300;
+          let aspectRatio = width / height;
+          if (aspectRatio > 1) {
+            dummyCanvas.style.width = maxDimension + "px";
+            dummyCanvas.style.height = maxDimension / aspectRatio + "px";
+          } else {
+            dummyCanvas.style.width = maxDimension * aspectRatio + "px";
+            dummyCanvas.style.height = maxDimension + "px";
+          }
+
+          dummyCanvas.innerHTML = `<div class="loading-circle"></div><div class="dummy-counter" style="display: flex; align-items: center; justify-content: center;">Preparing Image ${
+            i + 1
+          }...</div>`;
+          generatedImageDiv.appendChild(dummyCanvas);
+        }
+
+        for (let i = 0; i < imageOptions; i++) {
+          let currentSeed =
+            seed === -1 ? Math.floor(Math.random() * 1000000) : seed;
+          let url = `${urlBase}&seed=${currentSeed}`;
+
+          let response = await fetch(url);
+
+          if (!response.ok)
+            throw new Error(`Failed to fetch image: ${response.statusText}`);
+
+          let blob = await response.blob();
+          let img = document.createElement("img");
+          img.src = URL.createObjectURL(blob);
+          img.alt = `Prompt: ${prompt} | Seed: ${currentSeed} | Resolution: ${width}x${height} | Model: ${model}`;
+
+          let canvasWrapper = generatedImageDiv.children[i];
+          canvasWrapper.className = "image-canvas";
+          canvasWrapper.innerHTML = "";
+          canvasWrapper.appendChild(img);
+
+          let buttonWrapper = document.createElement("div");
+          buttonWrapper.className = "button-wrapper";
+
+          let redoButton = document.createElement("button");
+          redoButton.innerHTML = '<i class="fas fa-redo"></i>';
+          redoButton.onclick = () =>
+            reImagineSingleImage(
+              prompt,
+              model,
+              width,
+              height,
+              nologo,
+              privacy,
+              enhance,
+              canvasWrapper,
+              img,
+              currentSeed
+            );
+
+          let downloadButton = document.createElement("button");
+          downloadButton.innerHTML = '<i class="fas fa-download"></i>';
+          downloadButton.onclick = () => {
+            let a = document.createElement("a");
+            a.href = img.src;
+            a.download = `image_${currentSeed}.png`;
+            a.click();
+          };
+
+          let infoButton = document.createElement("button");
+          infoButton.innerHTML = '<i class="fas fa-info-circle"></i>';
+          infoButton.onclick = () =>
+            showImageInfo(prompt, model, currentSeed, width, height);
+
+          let fullscreenButton = document.createElement("button");
+          fullscreenButton.innerHTML = '<i class="fas fa-expand"></i>';
+          fullscreenButton.onclick = () => toggleFullscreenMode(img);
+
+          buttonWrapper.appendChild(redoButton);
+          buttonWrapper.appendChild(downloadButton);
+          buttonWrapper.appendChild(infoButton);
+          buttonWrapper.appendChild(fullscreenButton);
+          canvasWrapper.appendChild(buttonWrapper);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        removeCanvas(); // Call the removeCanvas function on error
+        alert("Error generating image. Please try again.");
+      } finally {
+        imagineButton.innerHTML = "IMAGINE";
+        imagineButton.disabled = false;
+        cancelButton.hidden = true;
+      }
+    }
+
+    function cancelImagine() {
+      removeCanvas();
+      imagineButtonEl.innerHTML = "IMAGINE";
+      imagineButtonEl.disabled = false;
+      cancelButtonEl.hidden = true;
+    }
+
+    function removeCanvas() {
+      const generatedImageDiv = generatedImageEl;
+      generatedImageDiv.innerHTML = ""; // Clear all images upon an error or cancellation
+    }
+
+    async function reImagineSingleImage(
+      prompt,
+      model,
+      width,
+      height,
+      nologo,
+      privacy,
+      enhance,
+      canvasWrapper,
+      img,
+      currentSeed
+    ) {
+      canvasWrapper.className = "dummy-canvas";
+      canvasWrapper.innerHTML = `<div class="loading-circle"></div><div class="dummy-counter" style="display: flex; align-items: center; justify-content: center;">Regenerating Image...</div>`;
+      const newSeed =
+        seedEl.value.trim() || Math.floor(Math.random() * 1000000);
+      const url = `https://image.pollinations.ai/prompt/${encodeURIComponent(
+        prompt
+      )}?model=${model}&width=${width}&height=${height}&nologo=${nologo}&private=${privacy}&enhance=${enhance}&seed=${newSeed}`;
+
+      let maxDimension = 300;
+      let aspectRatio = width / height;
+      if (aspectRatio > 1) {
+        canvasWrapper.style.width = maxDimension + "px";
+        canvasWrapper.style.height = maxDimension / aspectRatio + "px";
+      } else {
+        canvasWrapper.style.width = maxDimension * aspectRatio + "px";
+        canvasWrapper.style.height = maxDimension + "px";
+      }
+
+      try {
+        const response = await fetch(url);
+        if (!response.ok)
+          throw new Error(`Failed to fetch image: ${response.statusText}`);
+
+        const blob = await response.blob();
+        const newImg = document.createElement("img");
+        newImg.src = URL.createObjectURL(blob);
+        newImg.alt = `Prompt: ${prompt} | Seed: ${newSeed} | Resolution: ${width}x${height} | Model: ${model}`;
+
+        canvasWrapper.className = "image-canvas";
+        canvasWrapper.innerHTML = "";
+        canvasWrapper.appendChild(newImg);
+
+        let buttonWrapper = document.createElement("div");
+        buttonWrapper.className = "button-wrapper";
+
+        let redoButton = document.createElement("button");
+        redoButton.innerHTML = '<i class="fas fa-redo"></i>';
+        redoButton.onclick = () =>
+          reImagineSingleImage(
+            prompt,
+            model,
+            width,
+            height,
+            nologo,
+            privacy,
+            enhance,
+            canvasWrapper,
+            newImg,
+            newSeed
+          );
+
+        let downloadButton = document.createElement("button");
+        downloadButton.innerHTML = '<i class="fas fa-download"></i>';
+        downloadButton.onclick = () => {
+          let a = document.createElement("a");
+          a.href = newImg.src;
+          a.download = `image_${newSeed}.png`;
+          a.click();
+        };
+
+        let infoButton = document.createElement("button");
+        infoButton.innerHTML = '<i class="fas fa-info-circle"></i>';
+        infoButton.onclick = () =>
+          showImageInfo(prompt, model, newSeed, width, height);
+
+        let fullscreenButton = document.createElement("button");
+        fullscreenButton.innerHTML = '<i class="fas fa-expand"></i>';
+        fullscreenButton.onclick = () => toggleFullscreenMode(newImg);
+
+        buttonWrapper.appendChild(redoButton);
+        buttonWrapper.appendChild(downloadButton);
+        buttonWrapper.appendChild(infoButton);
+        buttonWrapper.appendChild(fullscreenButton);
+        canvasWrapper.appendChild(buttonWrapper);
+      } catch (error) {
+        console.error("Error:", error);
+        removeCanvas(); // Call the removeCanvas function on error
+        alert("Error regenerating image. Please try again.");
+      }
+    }
+
+    function showImageInfo(prompt, model, seed, width, height) {
+      let popup = document.createElement("div");
+      popup.className = "info-popup";
+      popup.innerHTML = `<div class="popup-content"><div class="faded-prompt"><strong>Prompt:</strong> ${prompt}</div><p><strong>Model:</strong> ${model}</p><p><strong>Seed:</strong> ${seed}</p><p><strong>Resolution:</strong> ${width}x${height}</p><button class="copy-info">Copy</button><button class="close-popup">Close</button></div>`;
+      document.body.appendChild(popup);
+
+      popup.querySelector(".copy-info").onclick = () => {
+        navigator.clipboard.writeText(
+          `Prompt: ${prompt}\nModel: ${model}\nSeed: ${seed}\nResolution: ${width}x${height}`
+        );
+        alert("Info copied to clipboard!");
+      };
+
+      popup.querySelector(".close-popup").onclick = () => {
+        document.body.removeChild(popup);
+      };
+    }
+
+    function clearBox(button) {
+      let content =
+        button.parentElement.parentElement.querySelector("textarea");
+      content.value = "";
+      saveToLocalStorage(content.id);
+    }
+
+    function clearScratchpad() {
+      scratchpad.value = "";
+      localStorage.removeItem("scratchpadContent");
+    }
+
+    function saveScratchpad() {
+      localStorage.scratchpadContent = scratchpad.value;
+      showPopup();
+    }
+
+    function loadScratchpad() {
+      const savedContent = localStorage.scratchpadContent;
+      if (savedContent) {
+        scratchpad.value = savedContent;
+      }
+    }
+
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark-mode");
+      toggleImages();
+      let colorSchemeIcon = colorSchemeIconEl;
+      if (document.body.classList.contains("dark-mode")) {
+        colorSchemeIcon.classList.remove("fa-moon");
+        colorSchemeIcon.classList.add("fa-sun");
+        localStorage.colorScheme = "dark";
+      } else {
+        colorSchemeIcon.classList.remove("fa-sun");
+        colorSchemeIcon.classList.add("fa-moon");
+        localStorage.colorScheme = "light";
+      }
+    }
+
+    function toggleImages() {
+      let lightImages = document.querySelectorAll(".light-mode-image");
+      let darkImages = document.querySelectorAll(".dark-mode-image");
+      lightImages.forEach(
+        (img) =>
+          (img.style.display = document.body.classList.contains("dark-mode")
+            ? "none"
+            : "block")
+      );
+      darkImages.forEach(
+        (img) =>
+          (img.style.display = document.body.classList.contains("dark-mode")
+            ? "block"
+            : "none")
+      );
+    }
+
+    function toggleFullscreen() {
+      let doc = document.documentElement;
+      let fullscreenIcon = fullscreenIconEl;
+      if (
+        !document.fullscreenElement &&
+        !document.mozFullScreenElement &&
+        !document.webkitFullscreenElement &&
+        !document.msFullscreenElement
+      ) {
+        if (doc.requestFullscreen) {
+          doc.requestFullscreen();
+        } else if (doc.mozRequestFullScreen) {
+          doc.mozRequestFullScreen();
+        } else if (doc.webkitRequestFullscreen) {
+          doc.webkitRequestFullscreen();
+        } else if (doc.msRequestFullscreen) {
+          doc.msRequestFullscreen();
+        }
+        fullscreenIcon.classList.remove("fa-expand-arrows-alt");
+        fullscreenIcon.classList.add("fa-compress-arrows-alt");
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+          document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) {
+          document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen()) {
+          document.msExitFullscreen();
+        }
+        fullscreenIcon.classList.remove("fa-compress-arrows-alt");
+        fullscreenIcon.classList.add("fa-expand-arrows-alt");
+      }
+    }
+
+    function toggleFullscreenMode(img) {
+      if (!document.fullscreenElement) {
+        if (img.requestFullscreen) {
+          img.requestFullscreen();
+        } else if (img.mozRequestFullScreen) {
+          img.mozRequestFullScreen();
+        } else if (img.webkitRequestFullscreen) {
+          img.webkitRequestFullscreen();
+        } else if (img.msRequestFullscreen) {
+          img.msRequestFullscreen();
+        }
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+          document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) {
+          document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) {
+          document.msExitFullscreen();
+        }
+      }
+    }
+
+    function toggleFeed() {
+      let feedContent = document.getElementById("feedContentEl");
+      let showFeedButton = document.getElementById("showFeedButtonEl");
+
+      if (feedContent.style.display === "none") {
+        feedContent.style.display = "block";
+        feedContent.classList.remove("hide-feed");
+        feedContent.classList.add("show-feed");
+        showFeedButton.textContent = "HIDE FEED";
+      } else {
+        feedContent.classList.add("hide-feed");
+        showFeedButton.textContent = "SHOW FEED";
+        setTimeout(() => (feedContent.style.display = "none"), 500);
+      }
+    }
+
+    function switchTab(evt, tabName) {
+      let i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tab-content");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+      tablinks = document
+        .getElementsByClassName("tabs")[0]
+        .getElementsByTagName("button");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+      document.getElementById(tabName).style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+
+    function toggleLock(button) {
+      let input = button.previousElementSibling;
+      if (input.readOnly) {
+        input.readOnly = false;
+        button.innerHTML = '<i class="fas fa-unlock"></i>';
+      } else {
+        input.readOnly = true;
+        button.innerHTML = '<i class="fas fa-lock"></i>';
+      }
+      saveToLocalStorage(input.id);
+    }
+
+    const eventSource = new EventSource("https://image.pollinations.ai/feed");
+
+    eventSource.onmessage = function (event) {
+      const data = JSON.parse(event.data);
+      const { imageURL, prompt, model, seed } = data;
+
+      const gridContainer = gridContainerEl;
+
+      const galleryItem = document.createElement("div");
+      galleryItem.className = "gallery-item";
+
+      const img = document.createElement("img");
+      img.src = imageURL;
+      img.alt = "Generated Image";
+
+      const info = document.createElement("div");
+      info.className = "info";
+      info.textContent = `Prompt: [click to show] Model: ${model} | Seed: ${seed}`;
+      info.dataset.fullPrompt = `Prompt: ${prompt}`; // Store full prompt
+
+      const copyButton = document.createElement("button");
+      copyButton.textContent = "Copy";
+      copyButton.onclick = function () {
+        navigator.clipboard
+          .writeText(prompt)
+          .then(() => {
+            alert("Prompt copied to clipboard!");
+          })
+          .catch((err) => {
+            console.error("Failed to copy prompt:", err);
+          });
+      };
+
+      // Toggle full prompt display
+      galleryItem.onclick = function () {
+        if (info.textContent.startsWith("Prompt: [click to show]")) {
+          info.textContent =
+            info.dataset.fullPrompt + ` | Model: ${model} | Seed: ${seed}`;
+        } else {
+          info.textContent = `Prompt: [click to show] Model: ${model} | Seed: ${seed}`;
+        }
+      };
+
+      galleryItem.appendChild(img);
+      galleryItem.appendChild(info);
+      galleryItem.appendChild(copyButton);
+
+      gridContainer.appendChild(galleryItem);
+    };
+
+    eventSource.onerror = function (event) {
+      console.error("Error receiving SSE:", event);
+    };
+
+    let progress = 0;
+    let ellipsisCount = 0;
+    let progressBar = progressBarEl;
+    let loadingText = loadingTextEl;
+    let loadingScreen = loadingScreenEl;
+
+    const loadingInterval = setInterval(() => {
+      if (progress > 500) {
+        clearInterval(loadingInterval);
+      } else {
+        progressBar.style.width = progress + "%";
+      }
+      ellipsisCount = (ellipsisCount + 1) % 4;
+      loadingText.textContent = "Loading" + ".".repeat(ellipsisCount);
+    }, 300);
+
+    document.addEventListener("DOMContentLoaded", () => {
+      window.addEventListener("load", () => {
+        setTimeout(() => {
+          loadingScreen.style.display = "none";
+        }, 0);
+      });
+      document.querySelectorAll("pre").forEach((preEl) => {
+        const code = preEl.querySelector("code");
+        if (code) {
+          const copyIcon = document.createElement("i");
+          copyIcon.className = "fas fa-copy copy-icon";
+          copyIcon.onclick = () => copyCodeContent(copyIcon);
+          preEl.appendChild(copyIcon);
+        }
+      });
+    });
+
+    const chatContainer = chatContainerEl;
+    const chatInput = chatInputEl;
+    let chatHistory = [];
+    window.onload = () => {
+      loadChatHistory();
+    };
+
+    const aiHelpBtn = document.getElementById("aiHelpBtn");
+    const aiHelpSectionEl = document.getElementById("aiHelpSectionEl");
+
+    aiHelpBtn.addEventListener("click", () => {
+      if (aiHelpSectionEl.hasAttribute("hidden")) {
+        aiHelpSectionEl.removeAttribute("hidden");
+      } else {
+        aiHelpSectionEl.setAttribute("hidden", true);
+      }
+    });
+
+    // Wait for DOM to fully load
+    document.addEventListener("DOMContentLoaded", function () {
+      const aiHelpSection = document.getElementById("aiHelpSection");
+      const writeBtn = document.getElementById("writeBtn");
+
+      // Process keywords and fetch AI response
+      async function processKeywords() {
+        writeBtn.innerHTML =
+          '<div class="loading-circle-aiHelp" style="margin-top: 5px; margin-right: 5px;"></div>'; // Show loading animation
+
+        const keywordInput = keywordInputEl.value.trim(); // Get input value
+        if (!keywordInput) {
+          alert("Please enter some keywords!");
+          writeBtn.innerHTML = `<i class="fas fa-caret-right"></i>`;
+          return;
+        }
+
+        const explicitKeywords = [
+          "nsfw",
+          "explicit",
+          "uncensored",
+          "tits",
+          "nude",
+          "incest",
+          "sex",
+          "fuck",
+          "anal",
+          "cumming",
+          "naked",
+          "breasts",
+          "cock",
+          "penis",
+          "pussy",
+          "vagina",
+          "ahegao",
+          "cums",
+          "raped",
+        ];
+
+        const containsExplicit = explicitKeywords.some((word) =>
+          keywordInput.toLowerCase().includes(word)
+        );
+
+        const randomSeed = Math.floor(Math.random() * 10000);
+
+        let promptInstruction;
+        if (containsExplicit) {
+          promptInstruction = `Write a detailed and explicit description for an image based on the idea or keywords: ${keywordInput}. Start with 'The image shows' and provide a medium-length paragraph that directly captures NSFW and sexual themes. Be explicit, avoiding euphemisms or vague language, and focus on clear and graphic details. Explicitly state the subject's age in numeric form followed by 'years old'. Ensure the description is vivid, straightforward, and emphasizes the erotic nature of the scene while maintaining coherence.`;
+        } else {
+          promptInstruction = `Write a detailed and engaging description for an image based on the idea or keywords: ${keywordInput}. Start with 'The image shows' and focus on creating a concise, vivid scene in a medium-length paragraph. Highlight one clear visual concept per sentence with easy-to-imagine details.`;
+        }
+
+        const API_URL = "https://text.pollinations.ai/openai";
+        const requestOptions = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+          },
+          body: JSON.stringify({
+            messages: [{ role: "system", content: promptInstruction }],
+            seed: randomSeed,
+            jsonMode: true,
+            model: "mistral-large",
+          }),
+        };
+
+        try {
+          const response = await fetch(API_URL, requestOptions);
+          if (!response.ok) {
+            throw new Error("Failed to fetch the response");
+          }
+
+          const data = await response.json();
+          const aiMessage =
+            data.choices?.[0]?.message?.content || "No response received.";
+
+          // Display the AI response in the description box
+          descriptionEl.value = aiMessage;
+        } catch (error) {
+          console.error("Error retrieving AI response: ", error);
+          descriptionEl.value = "An error occurred. Please try again.";
+        } finally {
+          writeBtn.innerHTML = `<i class="fas fa-caret-right"></i>`; // Reset button
+        }
+      }
+
+      // Attach the processKeywords function to the write button
+      writeBtn.onclick = processKeywords;
+    });
+
+    function copyCodeContent(icon) {
+      const codeContent = icon.parentElement.querySelector("code").innerText;
+      navigator.clipboard
+        .writeText(codeContent)
+        .then(() => alert("Code copied to clipboard!"))
+        .catch((err) => console.error("Failed to copy code:", err));
+    }
+  </script>
+</html>
